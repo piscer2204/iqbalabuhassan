@@ -1,17 +1,6 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import requests
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-# In[5]:
-
-
 
 auth_url = "https://www.strava.com/oauth/token"
 activites_url = "https://www.strava.com/api/v3/athlete/activities"
@@ -25,18 +14,10 @@ payload = {
     'f': 'json'
 }
 
-
-# In[6]:
-
-
 print("Requesting Token...\n")
 res = requests.post(auth_url, data=payload, verify=False)
 access_token = res.json()['access_token']
 print("Access Token = {}\n".format(access_token))
-
-
-# In[7]:
-
 
 header = {'Authorization': 'Bearer ' + access_token}
 param = {'per_page': 200, 'page': 1}
@@ -44,10 +25,6 @@ my_dataset = requests.get(activites_url, headers=header, params=param).json()
 
 print(my_dataset[0]["name"])
 print(my_dataset[0]["map"]["summary_polyline"])
-
-
-# In[14]:
-
 
 import pandas as pd
 from pandas import json_normalize
@@ -79,10 +56,6 @@ sns.set(style="ticks", context="talk")
 sns.scatterplot(x='distance', y = 'average_speed', data = runs).set_title("Average Speed vs Distance")
 
 sns.scatterplot(x='distance', y = 'max_speed', data = runs).set_title("Max Speed vs Distance")
-
-
-# In[16]:
-
 
 import matplotlib.pyplot as plt
 import numpy as np
